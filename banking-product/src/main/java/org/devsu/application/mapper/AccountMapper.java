@@ -8,6 +8,7 @@ public class AccountMapper {
     public static AccountDTO toDTO(Account acc) {
         return AccountDTO.builder()
                 .id(acc.getId())
+                .accountNumber(acc.getAccountNumber())
                 .initialBalance(acc.getInitialBalance())
                 .status(acc.getStatus())
                 .idCustomer(acc.getIdCustomer())
@@ -18,6 +19,7 @@ public class AccountMapper {
     public static Account fromDTO(AccountDTO dto) {
         return new Account(
                 dto.getId(),
+                dto.getAccountNumber(),
                 dto.getInitialBalance(),
                 dto.getStatus(),
                 dto.getIdCustomer(),
@@ -27,6 +29,7 @@ public class AccountMapper {
     public static Account fromDtoUpdate(AccountDTO dto, Long id){
         return new Account(
                 id,
+                dto.getAccountNumber(),
                 dto.getInitialBalance(),
                 dto.getStatus(),
                 dto.getIdCustomer(),

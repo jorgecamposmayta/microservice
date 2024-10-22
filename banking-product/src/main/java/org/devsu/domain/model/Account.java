@@ -9,6 +9,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String accountNumber;
     private BigDecimal initialBalance;
     private String status;
     private Long idCustomer;
@@ -19,15 +20,17 @@ public class Account {
 
     public Account(){}
 
-    public Account(Long id, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
+    public Account(Long id, String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
         this.id = id;
+        this.accountNumber = accountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.idCustomer = idCustomer;
         this.typeaccount = typeaccount;
     }
 
-    public Account(BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
+    public Account(String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
+        this.accountNumber = accountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.idCustomer = idCustomer;
@@ -72,5 +75,13 @@ public class Account {
 
     public void setTypeaccount(TypeAccount typeaccount) {
         this.typeaccount = typeaccount;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

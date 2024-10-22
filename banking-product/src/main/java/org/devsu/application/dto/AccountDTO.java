@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Builder
 public class AccountDTO {
     private Long id;
+    private String accountNumber;
     private BigDecimal initialBalance;
     private String status;
     private Long idCustomer;

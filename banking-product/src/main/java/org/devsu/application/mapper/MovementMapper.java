@@ -14,6 +14,7 @@ public class MovementMapper {
                 .status(mov.getStatus())
                 .valueMovement(mov.getValueMovement())
                 .availableBalance(mov.getAvailableBalance())
+                .typemovement(TypeMovementMapper.toDTO(mov.getTypemovement()))
                 .build();
     }
 

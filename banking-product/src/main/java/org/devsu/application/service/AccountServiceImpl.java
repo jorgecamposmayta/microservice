@@ -7,6 +7,7 @@ import org.devsu.application.port.in.TypeAccountService;
 import org.devsu.application.port.out.AccountRepository;
 import org.devsu.domain.exception.AccountNotFoundException;
 import org.devsu.domain.model.Account;
+import org.devsu.domain.model.TypeAccount;
 import org.devsu.domain.service.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO save(AccountDTO dto) {
-        taService.finById(dto.getTypeaccount().getId());
+        TypeAccount ta=taService.finById(dto.getTypeaccount().getId());
+        dto.getTypeaccount().setDescription(ta.getDescription());
         Account acc=AccountMapper.fromDTO(dto);
         return AccountMapper.toDTO(accRepository.save(acc));
     }
@@ -51,7 +53,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO update(Long id, AccountDTO dto) {
         finById(id);
-        taService.finById(dto.getTypeaccount().getId());
+        TypeAccount ta=taService.finById(dto.getTypeaccount().getId());
+        dto.getTypeaccount().setDescription(ta.getDescription());
         Account accEntity=AccountMapper.fromDtoUpdate(dto, id);
         return AccountMapper.toDTO(accRepository.save(accEntity));
     }

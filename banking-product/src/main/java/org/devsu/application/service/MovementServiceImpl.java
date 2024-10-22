@@ -7,6 +7,7 @@ import org.devsu.application.port.in.TypeMovementService;
 import org.devsu.application.port.out.MovementRepository;
 import org.devsu.domain.exception.MovementNotFoundException;
 import org.devsu.domain.model.Movement;
+import org.devsu.domain.model.TypeMovement;
 import org.devsu.domain.service.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,8 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public MovementDTO save(MovementDTO dto) {
-        tmService.finById(dto.getTypemovement().getId());
+        TypeMovement tm=tmService.finById(dto.getTypemovement().getId());
+        dto.getTypemovement().setDescription(tm.getDescription());
         Movement mov= MovementMapper.fromDTO(dto);
         return MovementMapper.toDTO(movRepository.save(mov));
     }
@@ -49,7 +51,8 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public MovementDTO update(Long id, MovementDTO dto) {
         finById(id);
-        tmService.finById(dto.getTypemovement().getId());
+        TypeMovement tm=tmService.finById(dto.getTypemovement().getId());
+        dto.getTypemovement().setDescription(tm.getDescription());
         Movement movEntity=MovementMapper.fromDtoUpdate(dto, id);
         return MovementMapper.toDTO(movRepository.save(movEntity));
     }
