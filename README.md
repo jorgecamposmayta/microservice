@@ -1,1 +1,1 @@
-# microservice
+# microservice - hexagonal architecture

@@ -10,6 +10,8 @@ public class CustomerDTO  {
     private String idCard;
     private String name;
     private String gender;
+
+    //validacion mayor 18
     private Integer age;
     private String address;
     private String phone;

@@ -1,0 +1,11 @@
+## URL BD H2 LOCAL
+http://localhost:8081/h2-console/login.do?jsessionid=7f07d642c154145aab868e19350665a8
+
+##JDBC URL
+jdbc:h2:mem:testdb
+
+##USER NAME
+devsu
+
+##PASSWORD
+devsu@.
