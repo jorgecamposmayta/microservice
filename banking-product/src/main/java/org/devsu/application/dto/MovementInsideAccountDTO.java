@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class MovementDTO {
+public class MovementInsideAccountDTO {
     private Long id;
     private LocalDate date;
     private Long idAccountNumber;
@@ -17,5 +17,4 @@ public class MovementDTO {
     private BigDecimal valueMovement;
     private BigDecimal availableBalance;
     private TypeMovementDTO typemovement;
-    private AccountInsideMovementDTO account;
 }

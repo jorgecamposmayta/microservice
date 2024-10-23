@@ -15,5 +15,5 @@ public class AccountDTO {
     private String status;
     private Long idCustomer;
     private TypeAccountDTO typeaccount;//validacion no nulo
-    private List<MovementDTO> listMovement;
+    private List<MovementInsideAccountDTO> listMovement;
 }

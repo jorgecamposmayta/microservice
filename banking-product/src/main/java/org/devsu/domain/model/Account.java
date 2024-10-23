@@ -1,5 +1,7 @@
 package org.devsu.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -20,7 +22,7 @@ public class Account {
     @JoinColumn(name = "id_type_account")
     private TypeAccount typeaccount;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Movement> listMovement;
 
     public Account(){}

@@ -1,5 +1,7 @@
 package org.devsu.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -21,7 +23,7 @@ public class Movement {
     @JoinColumn(name = "id_type_movement")
     private TypeMovement typemovement;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_account_number")
     private Account account;
 
