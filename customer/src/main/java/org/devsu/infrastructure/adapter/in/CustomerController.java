@@ -1,5 +1,6 @@
 package org.devsu.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
 import org.devsu.application.dto.CustomerDTO;
 import org.devsu.application.port.in.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomerController {
     }
 
     @PostMapping("/")
-    public  ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO dto){
+    public  ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO dto){
         CustomerDTO cus=cusService.save(dto);
         return new ResponseEntity<>(cus,HttpStatus.CREATED);
     }
