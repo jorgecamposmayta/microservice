@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,4 +15,5 @@ public class AccountDTO {
     private String status;
     private Long idCustomer;
     private TypeAccountDTO typeaccount;//validacion no nulo
+    private List<MovementDTO> listMovement;
 }

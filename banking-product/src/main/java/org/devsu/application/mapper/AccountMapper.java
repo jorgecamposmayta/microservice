@@ -1,7 +1,10 @@
 package org.devsu.application.mapper;
 
 import org.devsu.application.dto.AccountDTO;
+import org.devsu.application.dto.TypeAccountDTO;
 import org.devsu.domain.model.Account;
+
+import java.util.ArrayList;
 
 public class AccountMapper {
 
@@ -13,6 +16,8 @@ public class AccountMapper {
                 .status(acc.getStatus())
                 .idCustomer(acc.getIdCustomer())
                 .typeaccount(TypeAccountMapper.toDTO(acc.getTypeaccount()))
+                .listMovement(acc.getListMovement().stream()
+                        .map(x->MovementMapper.toDTO(x)).toList())
                 .build();
     }
 
@@ -23,7 +28,11 @@ public class AccountMapper {
                 dto.getInitialBalance(),
                 dto.getStatus(),
                 dto.getIdCustomer(),
-                TypeAccountMapper.fromDTO(dto.getTypeaccount()));
+                TypeAccountMapper.fromDTO(dto.getTypeaccount()==null?
+                        TypeAccountDTO.builder().build():
+                        dto.getTypeaccount()),
+                dto.getListMovement()==null?new ArrayList<>():
+                        dto.getListMovement().stream().map(x->MovementMapper.fromDTO(x)).toList());
     }
 
     public static Account fromDtoUpdate(AccountDTO dto, Long id){
@@ -33,6 +42,10 @@ public class AccountMapper {
                 dto.getInitialBalance(),
                 dto.getStatus(),
                 dto.getIdCustomer(),
-                TypeAccountMapper.fromDTO(dto.getTypeaccount()));
+                TypeAccountMapper.fromDTO(dto.getTypeaccount()==null?
+                        TypeAccountDTO.builder().build():
+                        dto.getTypeaccount()),
+                dto.getListMovement()==null?new ArrayList<>():
+                        dto.getListMovement().stream().map(x->MovementMapper.fromDTO(x)).toList());
     }
 }

@@ -17,4 +17,5 @@ public class MovementDTO {
     private BigDecimal valueMovement;
     private BigDecimal availableBalance;
     private TypeMovementDTO typemovement;
+    private AccountDTO account;
 }

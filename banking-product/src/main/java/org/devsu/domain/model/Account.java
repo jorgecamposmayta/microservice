@@ -3,6 +3,8 @@ package org.devsu.domain.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @Entity
 public class Account {
 
@@ -18,23 +20,28 @@ public class Account {
     @JoinColumn(name = "id_type_account")
     private TypeAccount typeaccount;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Movement> listMovement;
+
     public Account(){}
 
-    public Account(Long id, String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
+    public Account(Long id, String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount, List<Movement> listMovement) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.idCustomer = idCustomer;
         this.typeaccount = typeaccount;
+        this.listMovement = listMovement;
     }
 
-    public Account(String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount) {
+    public Account(String accountNumber, BigDecimal initialBalance, String status, Long idCustomer, TypeAccount typeaccount, List<Movement> listMovement) {
         this.accountNumber = accountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.idCustomer = idCustomer;
         this.typeaccount = typeaccount;
+        this.listMovement = listMovement;
     }
 
     public Long getId() {
@@ -43,6 +50,14 @@ public class Account {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public BigDecimal getInitialBalance() {
@@ -77,11 +92,11 @@ public class Account {
         this.typeaccount = typeaccount;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public List<Movement> getListMovement() {
+        return listMovement;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setListMovement(List<Movement> listMovement) {
+        this.listMovement = listMovement;
     }
 }

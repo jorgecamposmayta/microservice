@@ -12,7 +12,6 @@ public class Movement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    private Long idAccountNumber;
     private BigDecimal initialBalance;
     private String status;
     private BigDecimal valueMovement;
@@ -22,27 +21,31 @@ public class Movement {
     @JoinColumn(name = "id_type_movement")
     private TypeMovement typemovement;
 
+    @ManyToOne
+    @JoinColumn(name = "id_account_number")
+    private Account account;
+
     public Movement(){}
 
-    public Movement(Long id, LocalDate date, Long idAccountNumber, BigDecimal initialBalance, String status, BigDecimal valueMovement, BigDecimal availableBalance, TypeMovement typemovement) {
+    public Movement(Long id, LocalDate date, BigDecimal initialBalance, String status, BigDecimal valueMovement, BigDecimal availableBalance, TypeMovement typemovement, Account account) {
         this.id = id;
         this.date = date;
-        this.idAccountNumber = idAccountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.valueMovement = valueMovement;
         this.availableBalance = availableBalance;
         this.typemovement = typemovement;
+        this.account = account;
     }
 
-    public Movement(LocalDate date, Long idAccountNumber, BigDecimal initialBalance, String status, BigDecimal valueMovement, BigDecimal availableBalance, TypeMovement typemovement) {
+    public Movement(LocalDate date, BigDecimal initialBalance, String status, BigDecimal valueMovement, BigDecimal availableBalance, TypeMovement typemovement, Account account) {
         this.date = date;
-        this.idAccountNumber = idAccountNumber;
         this.initialBalance = initialBalance;
         this.status = status;
         this.valueMovement = valueMovement;
         this.availableBalance = availableBalance;
         this.typemovement = typemovement;
+        this.account = account;
     }
 
     public Long getId() {
@@ -59,14 +62,6 @@ public class Movement {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public Long getIdAccountNumber() {
-        return idAccountNumber;
-    }
-
-    public void setIdAccountNumber(Long idAccountNumber) {
-        this.idAccountNumber = idAccountNumber;
     }
 
     public BigDecimal getInitialBalance() {
@@ -107,5 +102,13 @@ public class Movement {
 
     public void setTypemovement(TypeMovement typemovement) {
         this.typemovement = typemovement;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
