@@ -11,9 +11,11 @@ import org.devsu.application.port.out.MovementRepository;
 import org.devsu.domain.exception.MovementNotFoundException;
 import org.devsu.domain.model.Account;
 import org.devsu.domain.model.Movement;
+import org.devsu.infrastructure.adapter.async.comunication.payload.RequestCustomer;
 import org.devsu.domain.model.TypeMovement;
 import org.devsu.domain.service.MovementServiceDomain;
 import org.devsu.domain.service.constant.Constant;
+import org.devsu.infrastructure.adapter.async.comunication.publisher.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,15 @@ import java.util.List;
 @Service
 public class MovementServiceImpl implements MovementService {
 
+    private final Publisher publisher;
+
     private  final MovementRepository movRepository;
     private  final AccountService accService;
     private  final AccountRepository accRepository;
     private final TypeMovementService tmService;
     @Autowired
-    public MovementServiceImpl(MovementRepository movRepository, AccountService accService, AccountRepository accRepository, TypeMovementService tmService) {
+    public MovementServiceImpl(Publisher publisher, MovementRepository movRepository, AccountService accService, AccountRepository accRepository, TypeMovementService tmService) {
+        this.publisher = publisher;
         this.movRepository = movRepository;
         this.accService = accService;
         this.accRepository = accRepository;
@@ -68,6 +73,15 @@ public class MovementServiceImpl implements MovementService {
         acc.getListMovement().add(mov);
         accRepository.save(acc);
         return MovementMapper.toDTO(movRepository.save(mov));
+    }
+
+    @Override
+    public List<MovementDTO> reportByUserBetweenRangeDate(String idCustomer, String starDate, String endDate) {
+
+        RequestCustomer rqCustomer= new RequestCustomer(idCustomer,starDate,endDate);
+        System.out.println("idCustomer llegada de peticion = " + idCustomer);
+        this.publisher.send(rqCustomer);
+        return null;
     }
 
     @Override

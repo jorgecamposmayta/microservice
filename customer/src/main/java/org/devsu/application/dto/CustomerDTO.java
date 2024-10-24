@@ -30,7 +30,7 @@ public class CustomerDTO  {
     @NotNull
     @NotBlank
     @Size(min = 7,max = 12)
-    @Pattern(regexp = "[^0-9]*", message = "Se permite solo numeros y de 7 a 12 digitos")
+    @Pattern(regexp = "^[0-9]*", message = "Se permite solo numeros y de 7 a 12 digitos")
     private String phone;
     @NotNull
     @NotBlank
