@@ -38,3 +38,33 @@ SELECT * FROM TYPE_MOVEMENT ;
 SELECT * FROM TYPE_ACCOUNT ;
 SELECT * FROM MOVEMENT ;
 SELECT * FROM ACCOUNT ;
+
+------------------------------------
+
+como importar y exportar el set de pruebas
+**************************************
+
+contexto: el set de pruebas se ejecuta en dos parte y guia para exportar e importar:
+https://www.youtube.com/watch?v=poYqCMhrgSc
+
+las entidades principales cuenta con CRUD
+
+para la ejecucion funcionar seguir los siguientes pasos:
+
+1- DEVSU CLIENTE
+
+	1.1 POST CLIENTES
+
+2- DEVSU CUENTAS - MOVIMIENTOS
+
+	2.1 POST TIPO-CUENTAS
+	2.2 POST CUENTAS
+	2.3 GET CUENTAS
+	2.4 POST TIPO-MOVIMIENTO
+	2.5 GET REPORTE CLIENTE CUENTAS RANGO FECHAS
+		la estructura de la url tiene los siguientes parametros
+			- id= id generado al crear el cliente
+			- idCard= valor ingresado que representa el identificador del cliente, es un valor unico en laBD
+			- fechaInicio y fechaFin= rango de fechas que se admitiran el registro de los movimientos 
+		localhost:8080/movimientos/reportes?id=1&idCard=12s31s2213&fechaInicio=2024-10-24&fechaFin=2024-10-24
+
