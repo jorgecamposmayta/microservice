@@ -1,6 +1,9 @@
 package org.devsu.infrastructure.adapter.in;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.devsu.application.dto.AccountDTO;
 import org.devsu.application.dto.MovementDTO;
 import org.devsu.application.port.in.MovementService;
 import org.hibernate.annotations.Parameter;
@@ -49,8 +52,8 @@ public class MovementController {
     }
 
     @GetMapping("/reportes")
-    public ResponseEntity<List<MovementDTO>> getReportByUserBetweenRangeDate(@RequestParam("id") String idCustomer, @RequestParam("fechaInicio")String starDate, @RequestParam("fechaFin") String endDate){
-        List<MovementDTO> listMovement= movService.reportByUserBetweenRangeDate(idCustomer, starDate,endDate);
-        return new ResponseEntity<>(listMovement, HttpStatus.OK);
+    public ResponseEntity<List<AccountDTO>> getReportByUserBetweenRangeDate(@RequestParam("id") String id, @NotNull @NotBlank @RequestParam("idCard") String idCard, @RequestParam("fechaInicio")String starDate, @RequestParam("fechaFin") String endDate){
+        List<AccountDTO> listAccount= movService.reportByUserBetweenRangeDate(id, idCard, starDate,endDate);
+        return new ResponseEntity<>(listAccount, HttpStatus.OK);
     }
 }

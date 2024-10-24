@@ -33,4 +33,5 @@ public class AccountAdapter implements AccountRepository {
     public Account save(Account acc) {
         return aJpa.save(acc);
     }
+
 }

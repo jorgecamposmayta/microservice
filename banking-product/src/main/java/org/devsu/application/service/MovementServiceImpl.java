@@ -1,7 +1,9 @@
 package org.devsu.application.service;
 
+import org.devsu.application.dto.AccountDTO;
 import org.devsu.application.dto.MovementDTO;
 import org.devsu.application.dto.TypeMovementDTO;
+import org.devsu.application.mapper.AccountMapper;
 import org.devsu.application.mapper.MovementMapper;
 import org.devsu.application.port.in.AccountService;
 import org.devsu.application.port.in.MovementService;
@@ -20,14 +22,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovementServiceImpl implements MovementService {
 
     private final Publisher publisher;
-
     private  final MovementRepository movRepository;
     private  final AccountService accService;
     private  final AccountRepository accRepository;
@@ -76,12 +79,16 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
-    public List<MovementDTO> reportByUserBetweenRangeDate(String idCustomer, String starDate, String endDate) {
-
-        RequestCustomer rqCustomer= new RequestCustomer(idCustomer,starDate,endDate);
-        System.out.println("idCustomer llegada de peticion = " + idCustomer);
+    public List<AccountDTO> reportByUserBetweenRangeDate(String id, String idCard, String starDate, String endDate) {
+        RequestCustomer rqCustomer = new RequestCustomer(id, idCard, starDate, endDate);
+        System.out.println("idCard o Identificacion recibida en publisher = " + idCard);
         this.publisher.send(rqCustomer);
-        return null;
+        List<AccountDTO> listaAccountDTO= new ArrayList<>();
+        if(id!=null ) {
+            Optional<Account> optAccount = accRepository.finById(Long.valueOf(id));
+            listaAccountDTO = AccountMapper.getlistAccountDTO(optAccount, starDate, endDate);
+        }
+        return listaAccountDTO;
     }
 
     @Override

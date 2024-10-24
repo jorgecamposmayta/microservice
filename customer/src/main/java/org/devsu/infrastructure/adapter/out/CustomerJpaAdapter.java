@@ -30,6 +30,11 @@ public class CustomerJpaAdapter implements CustomerRepository {
     }
 
     @Override
+    public Optional<Customer> findByIdCard(String IdCard) {
+        return cusJpa.findByIdCard(IdCard);
+    }
+
+    @Override
     public Customer save(Customer cus) {
         return cusJpa.save(cus);
     }

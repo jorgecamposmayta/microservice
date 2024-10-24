@@ -11,13 +11,15 @@ public class RequestCustomer implements Serializable {
 
     private static final long serialVersionUID=1L;
     private String id;
+    private String idCard;
     private String fechaInicio;
     private String fechaFin;
 
-    public  RequestCustomer(){}
+    public RequestCustomer(){}
 
-    public RequestCustomer(String id, String fechaInicio, String fechaFin) {
+    public RequestCustomer(String id, String idCard, String fechaInicio, String fechaFin) {
         this.id = id;
+        this.idCard = idCard;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }

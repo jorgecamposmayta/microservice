@@ -5,12 +5,14 @@ import org.devsu.application.mapper.CustomerMapper;
 import org.devsu.application.port.in.CustomerService;
 import org.devsu.application.port.out.CustomerRepository;
 import org.devsu.domain.exception.CustomerNotFoundException;
+import org.devsu.domain.exception.SqlException;
 import org.devsu.domain.model.Customer;
 import org.devsu.domain.service.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -38,6 +40,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO save(CustomerDTO dto) {
         Customer cus=CustomerMapper.fromDTO(dto);
+        Optional<Customer> cusstomer=cusRepository.findByIdCard(dto.getIdCard());
+        if(cusstomer.isEmpty()){
+            cus=cusRepository.save(cus);
+        } else if (cusstomer!= null && cusstomer.get().getIdCard().equals(dto.getIdCard())){
+            throw new SqlException(Constant.SQL_EXCEPTION.concat(" - idCard o identificacion ya usado: ")+dto.getIdCard());
+        }
         return CustomerMapper.toDTO(cusRepository.save(cus));
     }
 

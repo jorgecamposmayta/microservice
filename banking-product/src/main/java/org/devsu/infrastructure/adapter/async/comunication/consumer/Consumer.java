@@ -13,6 +13,7 @@ public class Consumer {
     @RabbitListener(queues = {"${devsu.queue.name.rs}"})
     public void receive(@Payload ResponseCustomer message){
         log.info("Received message to string {}", message.getId());
+
         log.info("Received message {}", message);
     }
 }

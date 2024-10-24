@@ -1,5 +1,6 @@
 package org.devsu.application.port.in;
 
+import org.devsu.application.dto.AccountDTO;
 import org.devsu.application.dto.MovementDTO;
 import org.devsu.domain.model.Movement;
 
@@ -15,5 +16,5 @@ public interface MovementService {
     MovementDTO addMovementToAccount(MovementDTO dto);
 
 
-    List<MovementDTO> reportByUserBetweenRangeDate(String idCustomer, String starDate, String endDate);
+    List<AccountDTO> reportByUserBetweenRangeDate(String id,String idCustomer, String starDate, String endDate);
 }

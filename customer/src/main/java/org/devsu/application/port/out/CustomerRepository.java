@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface CustomerRepository {
     List<Customer> findAll();
     Optional<Customer> finById(Long id);
+    Optional<Customer> findByIdCard(String IdCard);
     Customer save(Customer cus);
 }

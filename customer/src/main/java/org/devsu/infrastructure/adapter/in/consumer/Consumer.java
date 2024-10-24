@@ -29,11 +29,13 @@ public class Consumer {
 
     @RabbitListener(queues = {"${devsu.queue.name.rq}"})
     public void receive(@Payload RequestCustomer message){
-        Long id=Long.valueOf(message.getId());
-        log.info("Received message to string {}", message.getId());
-        Optional<Customer> customer=cumRepository.finById(id);
-        ResponseCustomer rsCustomer= new ResponseCustomer(String.valueOf(customer.get().getId()), customer.get().getName());
-        this.publisher.send(rsCustomer);
+        log.info("Received message to string {}", message);
+        Optional<Customer> customer = cumRepository.findByIdCard(message.getIdCard());
+        if(customer.isPresent()) {
+            ResponseCustomer rsCustomer = new ResponseCustomer(String.valueOf(customer.get().getId()),customer.get().getIdCard(), customer.get().getName());
+            this.publisher.send(rsCustomer);
+        }
+        this.publisher.send(new ResponseCustomer(message.getId(),message.getIdCard(), null));
 
     }
 }
