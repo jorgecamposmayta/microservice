@@ -1,5 +1,6 @@
 package org.devsu.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
 import org.devsu.application.dto.AccountDTO;
 import org.devsu.application.port.in.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class AccountController {
     }
 
     @PostMapping("/")
-    public  ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO dto){
+    public  ResponseEntity<AccountDTO> createAccount(@Valid @RequestBody AccountDTO dto){
         AccountDTO acc=accService.save(dto);
         return new ResponseEntity<>(acc,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public  ResponseEntity<AccountDTO> updateAccount(@PathVariable Long id, @RequestBody AccountDTO dto){
+    public  ResponseEntity<AccountDTO> updateAccount(@Valid @PathVariable Long id, @RequestBody AccountDTO dto){
         AccountDTO acc=accService.update(id,dto);
         return new ResponseEntity<>(acc,HttpStatus.OK);
     }

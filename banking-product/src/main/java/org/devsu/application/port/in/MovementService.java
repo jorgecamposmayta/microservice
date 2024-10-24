@@ -9,7 +9,7 @@ public interface MovementService {
 
     List<MovementDTO> findAll();
     Movement finById(Long id);
-    MovementDTO save(MovementDTO dto);
     MovementDTO update(Long id, MovementDTO dto);
     MovementDTO delete(Long id);
+    MovementDTO addMovementToAccount(MovementDTO dto);
 }

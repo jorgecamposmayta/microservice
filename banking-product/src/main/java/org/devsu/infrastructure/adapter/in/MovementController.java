@@ -1,5 +1,6 @@
 package org.devsu.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
 import org.devsu.application.dto.MovementDTO;
 import org.devsu.application.port.in.MovementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class MovementController {
     }
 
     @PostMapping("/")
-    public  ResponseEntity<MovementDTO> createMovement(@RequestBody MovementDTO dto){
-        MovementDTO mov= movService.save(dto);
+    public  ResponseEntity<MovementDTO> createMovement(@Valid  @RequestBody MovementDTO dto){
+        MovementDTO mov= movService.addMovementToAccount(dto);
         return new ResponseEntity<>(mov,HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public  ResponseEntity<MovementDTO> updateMovement(@PathVariable Long id, @RequestBody MovementDTO dto){
+    public  ResponseEntity<MovementDTO> updateMovement(@Valid @PathVariable Long id, @RequestBody MovementDTO dto){
         MovementDTO mov= movService.update(id,dto);
         return new ResponseEntity<>(mov,HttpStatus.OK);
     }

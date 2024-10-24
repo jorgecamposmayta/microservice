@@ -1,27 +1,38 @@
 package org.devsu.application.service;
 
 import org.devsu.application.dto.MovementDTO;
+import org.devsu.application.dto.TypeMovementDTO;
 import org.devsu.application.mapper.MovementMapper;
+import org.devsu.application.port.in.AccountService;
 import org.devsu.application.port.in.MovementService;
 import org.devsu.application.port.in.TypeMovementService;
+import org.devsu.application.port.out.AccountRepository;
 import org.devsu.application.port.out.MovementRepository;
 import org.devsu.domain.exception.MovementNotFoundException;
+import org.devsu.domain.model.Account;
 import org.devsu.domain.model.Movement;
 import org.devsu.domain.model.TypeMovement;
+import org.devsu.domain.service.MovementServiceDomain;
 import org.devsu.domain.service.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MovementServiceImpl implements MovementService {
 
     private  final MovementRepository movRepository;
+    private  final AccountService accService;
+    private  final AccountRepository accRepository;
     private final TypeMovementService tmService;
     @Autowired
-    public MovementServiceImpl(MovementRepository movRepository, TypeMovementService tmService) {
+    public MovementServiceImpl(MovementRepository movRepository, AccountService accService, AccountRepository accRepository, TypeMovementService tmService) {
         this.movRepository = movRepository;
+        this.accService = accService;
+        this.accRepository = accRepository;
         this.tmService = tmService;
     }
 
@@ -40,11 +51,22 @@ public class MovementServiceImpl implements MovementService {
                 .orElseThrow(()-> new MovementNotFoundException(Constant.TYPE_MOVEMENT_NOT_FOUND.concat(" - id: ")+id));
     }
 
+
     @Override
-    public MovementDTO save(MovementDTO dto) {
-        TypeMovement tm=tmService.finById(dto.getTypemovement().getId());
-        dto.getTypemovement().setDescription(tm.getDescription());
-        Movement mov= MovementMapper.fromDTO(dto);
+    public MovementDTO addMovementToAccount(MovementDTO dto) {
+        TypeMovementDTO tm=MovementServiceDomain.calculateTypeMovement(dto.getValueMovement());
+        Account acc=accService.finById(dto.getAccount().getId());
+        MovementServiceDomain.validateBalance(tm.getDescription(),acc.getInitialBalance(), dto.getValueMovement());
+        BigDecimal initialBalance =acc.getInitialBalance();
+        BigDecimal availableBalance=MovementServiceDomain.caculateAvailableBalance(initialBalance,dto.getValueMovement());
+        acc.setInitialBalance(availableBalance);
+        MovementDTO dtoComplete=MovementMapper.toDTOComplete(dto, availableBalance, tm, acc.getAccountNumber(), initialBalance);
+        Movement mov= MovementMapper.fromDTO(dtoComplete);
+        if (acc.getListMovement().isEmpty()){
+            acc.setListMovement(new ArrayList<>());
+        }
+        acc.getListMovement().add(mov);
+        accRepository.save(acc);
         return MovementMapper.toDTO(movRepository.save(mov));
     }
 
@@ -63,4 +85,5 @@ public class MovementServiceImpl implements MovementService {
         mov.setStatus(Constant.MOVEMENT_STATUS_INACTIVE);
         return MovementMapper.toDTO(movRepository.save(mov));
     }
+
 }

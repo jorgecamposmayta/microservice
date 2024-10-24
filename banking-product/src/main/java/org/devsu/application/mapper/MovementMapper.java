@@ -2,8 +2,12 @@ package org.devsu.application.mapper;
 
 import org.devsu.application.dto.MovementInsideAccountDTO;
 import org.devsu.application.dto.MovementDTO;
+import org.devsu.application.dto.TypeMovementDTO;
 import org.devsu.domain.model.Account;
 import org.devsu.domain.model.Movement;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class MovementMapper {
 
@@ -35,7 +39,7 @@ public class MovementMapper {
     public static Movement fromDTO(MovementDTO dto) {
         return new Movement(
                 dto.getId(),
-                dto.getDate(),
+                LocalDate.now(),
                 dto.getInitialBalance(),
                 dto.getStatus(),
                 dto.getValueMovement(),
@@ -69,5 +73,15 @@ public class MovementMapper {
                 TypeMovementMapper.fromDTO(dto.getTypemovement()),
                 dto.getAccount()==null?new Account():
                         AccountMapper.fromDTOInsideMovement(dto.getAccount()));
+    }
+
+
+    public static MovementDTO toDTOComplete(MovementDTO dto, BigDecimal availableBalance, TypeMovementDTO tm, String accountNumber, BigDecimal initialBalance ) {
+        dto.setAvailableBalance(availableBalance);
+        dto.getTypemovement().setDescription(tm.getDescription());
+        dto.getTypemovement().setId(tm.getId());
+        dto.getAccount().setAccountNumber(accountNumber);
+        dto.setInitialBalance(initialBalance);
+        return dto;
     }
 }
