@@ -24,6 +24,8 @@ cada microservicio cuenta con su propia base de datos, la comunicacion es median
 3- ingresar a base de datos cliente
 ********************************
 http://localhost:8081/h2-console/login.do?jsessionid=d265dc2851364adddb6de83669b3de4d
+user:devsu
+pass:devsu@.
 
 ejecutar el script para validar el registro de los clientes
 SELECT * FROM PERSON 
@@ -31,6 +33,8 @@ SELECT * FROM PERSON
 ingresar a base de datos banking-product
 ********************************
 http://localhost:8080/h2-console/login.do?jsessionid=ce2ad2f20909f0674bee2e657218b271
+user:devsu
+pass:devsu@.
 
 ejecutar los querys para validar el registro de la informacion normalizada
 
